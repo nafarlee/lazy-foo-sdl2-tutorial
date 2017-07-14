@@ -13,7 +13,7 @@ enum KeyPressSurfaces {
 };
 
 bool init(SDL_Window**, SDL_Surface**);
-bool load_media(SDL_Surface**);
+bool load_media(SDL_Surface*[]);
 void terminate(SDL_Window**, SDL_Surface**);
 SDL_Surface* load_surface(char[]);
 
