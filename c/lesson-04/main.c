@@ -95,18 +95,43 @@ void terminate(SDL_Window** window, SDL_Surface** surface) {
 
 
 int main () {
+  SDL_Surface* key_press_surfaces[KEY_PRESS_SURFACE_TOTAL];
   SDL_Window* window = NULL;
   SDL_Surface* screen_surface = NULL;
   SDL_Surface* current_surface = NULL;
 
   if (!init(&window, &screen_surface)) return 1;
-  if (!load_media(&current_surface)) return 1;
+  if (!load_media(key_press_surfaces)) return 1;
 
   bool quit = false;
   SDL_Event e;
   while (!quit) {
     while (SDL_PollEvent(&e) != 0) {
-      if (e.type == SDL_QUIT) quit = true;
+      if (e.type == SDL_QUIT) {
+        quit = true;
+      } else {
+        switch (e.key.keysym.sym) {
+          case SDLK_UP:
+            current_surface = key_press_surfaces[KEY_PRESS_SURFACE_UP];
+            break;
+
+          case SDLK_DOWN:
+            current_surface = key_press_surfaces[KEY_PRESS_SURFACE_DOWN];
+            break;
+
+          case SDLK_LEFT:
+            current_surface = key_press_surfaces[KEY_PRESS_SURFACE_LEFT];
+            break;
+
+          case SDLK_RIGHT:
+            current_surface = key_press_surfaces[KEY_PRESS_SURFACE_RIGHT];
+            break;
+
+          default:
+            current_surface = key_press_surfaces[KEY_PRESS_SURFACE_DEFAULT];
+            break;
+        }
+      }
     }
     SDL_BlitSurface(current_surface, NULL, screen_surface, NULL);
     SDL_UpdateWindowSurface(window);
