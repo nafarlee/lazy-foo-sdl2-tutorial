@@ -48,11 +48,34 @@ bool init(SDL_Window** window, SDL_Surface** screen_surface) {
 }
 
 
-bool load_media(SDL_Surface** surface) {
-  *surface = SDL_LoadBMP("current_surface_gray.bmp");
+bool load_media(SDL_Surface *surface_container[]) {
+  surface_container[KEY_PRESS_SURFACE_DEFAULT] = load_surface("./default.bmp");
+  if (surface_container[KEY_PRESS_SURFACE_DEFAULT] == NULL) {
+    printf("%s\n", "Failed to load DEFAULT image");
+    return false;
+  }
 
-  if (*surface == NULL) {
-    printf("Image could not be loaded! SDL_Error: %s\n", SDL_GetError());
+  surface_container[KEY_PRESS_SURFACE_UP] = load_surface("./up.bmp");
+  if (surface_container[KEY_PRESS_SURFACE_UP] == NULL) {
+    printf("%s\n", "Failed to load UP image");
+    return false;
+  }
+
+  surface_container[KEY_PRESS_SURFACE_DOWN] = load_surface("./down.bmp");
+  if (surface_container[KEY_PRESS_SURFACE_DOWN] == NULL) {
+    printf("%s\n", "Failed to load DOWN image");
+    return false;
+  }
+
+  surface_container[KEY_PRESS_SURFACE_LEFT] = load_surface("./left.bmp");
+  if (surface_container[KEY_PRESS_SURFACE_LEFT] == NULL) {
+    printf("%s\n", "Failed to load LEFT image");
+    return false;
+  }
+
+  surface_container[KEY_PRESS_SURFACE_RIGHT] = load_surface("./right.bmp");
+  if (surface_container[KEY_PRESS_SURFACE_RIGHT] == NULL) {
+    printf("%s\n", "Failed to load RIGHT image");
     return false;
   }
 
